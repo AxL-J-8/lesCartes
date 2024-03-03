@@ -18,7 +18,7 @@ public class Botte extends Probleme {
 		case ACCIDENT:
 			return "As du volant";
 		}
-		return null;
+		return "";
 	}
 
 }

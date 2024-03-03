@@ -18,6 +18,6 @@ public class Parade extends Bataille {
 		case ACCIDENT:
 			return "Reparations";
 		}
-		return null;
+		return "";
 	}
 }

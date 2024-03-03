@@ -23,7 +23,7 @@ public class Sabot implements Iterable<Carte> {
 
 	private void ajouterCarte(Carte carte) throws ArrayIndexOutOfBoundsException {
 		if (nbCartes > NBCARTEMAX) {
-			throw new ArrayIndexOutOfBoundsException("LImite du sabot depasee");
+			throw new ArrayIndexOutOfBoundsException("Limite du sabot depasee");
 		} else {
 			jeuDeCarte[nbCartes++] = carte;
 		}
@@ -47,7 +47,7 @@ public class Sabot implements Iterable<Carte> {
 		for (Carte carte : cartes) {
 
 			try {
-				ajouterCarte(carte);
+				ajouterFamilleCarte(carte);
 			} catch (ArrayIndexOutOfBoundsException e) {
 				e.printStackTrace();
 			}

@@ -19,6 +19,6 @@ public class Attaque extends Bataille {
 	     case ACCIDENT:
 	    	 return "Accident";
 	     }
-		return null;
+		return "";
 	   }
 }
