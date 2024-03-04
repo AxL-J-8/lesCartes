@@ -1,9 +1,10 @@
-package milleBorne;
+package cartes;
 
 public abstract class Carte {
 	private int nombre;
+
 	protected Carte(int nbExenplaires) {
-		this.nombre=nbExenplaires;
+		this.nombre = nbExenplaires;
 	}
 
 	public int getNombre() {
@@ -14,8 +15,9 @@ public abstract class Carte {
 		this.nombre = nombre;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+
+		return obj != null && obj.getClass() == getClass();
+	}
 }
-
-
-
-

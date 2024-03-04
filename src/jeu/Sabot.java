@@ -4,17 +4,17 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import milleBorne.Carte;
+import cartes.Carte;
 
 public class Sabot implements Iterable<Carte> {
 	private Carte[] jeuDeCarte;
-	private int NBCARTEMAX;
+	private final int NB_CARTE_MAX;
 	private int nbCartes = 0;
 	private int nombreOperations = 0;
 
 	public Sabot(int capacite) {
 		this.jeuDeCarte = new Carte[capacite];
-		this.NBCARTEMAX = capacite;
+		this.NB_CARTE_MAX = capacite;
 	}
 
 	public boolean estVide() {
@@ -22,10 +22,12 @@ public class Sabot implements Iterable<Carte> {
 	}
 
 	private void ajouterCarte(Carte carte) throws ArrayIndexOutOfBoundsException {
-		if (nbCartes > NBCARTEMAX) {
+		if (nbCartes > NB_CARTE_MAX) {
 			throw new ArrayIndexOutOfBoundsException("Limite du sabot depasee");
 		} else {
-			jeuDeCarte[nbCartes++] = carte;
+			jeuDeCarte[nbCartes] = carte;
+			nbCartes++;
+			nombreOperations++;
 		}
 	}
 
@@ -54,17 +56,17 @@ public class Sabot implements Iterable<Carte> {
 
 		}
 	}
+
 	public Carte piocher() {
-		Iterator<Carte> monIterateur=iterator();
-		Carte maCarte=null;
-		if(monIterateur.hasNext()) {
-			maCarte=monIterateur.next();
+		Iterator<Carte> monIterateur = iterator();
+		Carte maCarte = null;
+		if (monIterateur.hasNext()) {
+			maCarte = monIterateur.next();
 			monIterateur.remove();
 		}
 		return maCarte;
 	}
 
-	
 	public Iterator<Carte> iterator() {
 		return new Iterateur();
 	}
@@ -104,7 +106,8 @@ public class Sabot implements Iterable<Carte> {
 			nextEffectue = false;
 			indiceIterateur--;
 			nbCartes--;
-			nombreOperations++; nombreOperationsReference++;
+			nombreOperations++;
+			nombreOperationsReference++;
 		}
 
 		private void verificationConcurrence() {

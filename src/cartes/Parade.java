@@ -1,8 +1,8 @@
-package milleBorne;
+package cartes;
 
 public class Parade extends Bataille {
 
-	public Parade(int nbExenplaires, Type typeCarte) {
+	public Parade( Type typeCarte,int nbExenplaires) {
 		super(nbExenplaires, typeCarte);
 	}
 	@Override
@@ -20,4 +20,5 @@ public class Parade extends Bataille {
 		}
 		return "";
 	}
+
 }

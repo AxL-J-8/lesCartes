@@ -1,24 +1,26 @@
-package milleBorne;
+package cartes;
 
-public class Botte extends Probleme {
+public class Attaque extends Bataille {
 
-	public Botte(int nbExenplaires, Type typeCarte) {
+	public Attaque( Type typeCarte,int nbExenplaires) {
 		super(nbExenplaires, typeCarte);
+
 	}
 	@Override
 	public String toString() {
 		Type typeCarte=super.getType();
 		switch(typeCarte){
 		case FEU:
-			return "Vehicule Prioritaire";
+			return "Feu Rouge";
 		case ESSENCE :
-			return "Citerne";
+			return "Panne d'essence";
 		case CREVAISON:
-			return "Increvable";
+			return "Crevaison";
 		case ACCIDENT:
-			return "As du volant";
+			return "Accident";
 		}
 		return "";
 	}
+
 
 }

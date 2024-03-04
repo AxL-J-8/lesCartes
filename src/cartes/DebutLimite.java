@@ -1,4 +1,4 @@
-package milleBorne;
+package cartes;
 
 public class DebutLimite extends Limite {
 
@@ -10,4 +10,5 @@ public class DebutLimite extends Limite {
 	public String toString() {
 		return "Debut de limite de vitesse";
 	}
+
 }
