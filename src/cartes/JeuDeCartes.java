@@ -1,11 +1,13 @@
 package cartes;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+
+import java.util.LinkedList;
 import java.util.List;
 
+import utils.Utils;
+
 public class JeuDeCartes {
-	private List<Carte> listeCartes = new ArrayList<>();
+	private List<Carte> listeCartes = new LinkedList<>();
 
 	private Carte[] typesDeCartes = {
 			// ATTAQUES
@@ -23,6 +25,12 @@ public class JeuDeCartes {
 			new Botte(Type.ACCIDENT, 1), new Botte(Type.CREVAISON, 1), new Botte(Type.ESSENCE, 1),
 			new Botte(Type.FEU, 1) };
 
+	public JeuDeCartes() {
+		ajouterFamilleCarte(typesDeCartes);
+		listeCartes=Utils.melanger(listeCartes);
+		//TODO 3 7
+	}
+
 	public void ajouterFamilleCarte(Carte... cartes) {
 		int limite;
 		for (Carte carte : cartes) {
@@ -32,10 +40,6 @@ public class JeuDeCartes {
 				listeCartes.add(carte);
 			}
 		}
-	}
-
-	public JeuDeCartes() {
-		ajouterFamilleCarte(typesDeCartes);
 	}
 
 	public List<Carte> getListeCartes() {
@@ -48,8 +52,7 @@ public class JeuDeCartes {
 
 	private int countCard(Carte carte) {
 		int count = 0;
-		for (Iterator<Carte> iterator = listeCartes.iterator(); iterator.hasNext();) {
-			Carte carteListe = iterator.next();
+		for (Carte carteListe:listeCartes) {
 			if (carte.equals(carteListe))
 				count++;
 		}
@@ -57,12 +60,11 @@ public class JeuDeCartes {
 	}
 
 	public boolean checkCount() {
-		int count;
-		boolean result = true;
-		for (int i = 0; i < typesDeCartes.length; i++) {
-			count = countCard(typesDeCartes[i]);
-			result = result && (count == typesDeCartes[i].getNombre());
+		for (Carte carte : typesDeCartes) {
+			if(countCard(carte) !=carte.getNombre()) {
+				return false;
+			}
 		}
-		return result;
+		return true;
 	}
 }

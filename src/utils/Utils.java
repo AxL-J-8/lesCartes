@@ -9,24 +9,14 @@ import java.util.Random;
 public class Utils {
 	private static Random rand = new Random();
 
-	public static <E> E extraire(E[] liste) {
-		int index = rand.nextInt(liste.length);
-		E elem = liste[index];
-		for (int i = index; i < liste.length - 1; i++) {
-			liste[i] = liste[i + 1];
-		}
-
-		return elem;
-
-	}
-
 	public static <E> E extraire(List<E> liste) {
 
-		int index = rand.nextInt(liste.size());
-		E elem = liste.get(index);
-		liste.remove(elem);
+		if (!liste.isEmpty()) {
+			int index = rand.nextInt(liste.size());
+			return liste.remove(index);
+		}
 
-		return elem;
+		return null;
 
 	}
 
@@ -42,55 +32,62 @@ public class Utils {
 		return listeMelangee;
 	}
 
-	public static <E> boolean verifierMelange(List<E> liste1, List<E> liste2) {
-		boolean result = true;
-		E elem;
-		for (ListIterator<E> iterator = liste1.listIterator(); iterator.hasNext();) {
-			elem = iterator.next();
-			result = result && (Collections.frequency(liste1, elem) == Collections.frequency(liste2, elem));
+	public static <E> boolean verifierMelange(List<E> listeOrigine, List<E> listeResultat) {
+
+		if (verifierPresence(listeOrigine, listeResultat)) {
+			return verifierPresence(listeResultat, listeOrigine);
 		}
-		return result;
+		return false;
+	}
+
+	private static <E> boolean verifierPresence(List<E> liste1, List<E> liste2) {
+		for (E elem : liste1) {
+			if ((Collections.frequency(liste1, elem) != Collections.frequency(liste2, elem))) {
+				return false;
+			}
+		}
+		return !(liste1.isEmpty());
 	}
 
 	public static <E> List<E> rassembler(List<E> liste) {
 		List<E> listeTri = new ArrayList<>();
-		E elem;
 		int index;
-		for (ListIterator<E> iterator = liste.listIterator(); iterator.hasNext();) {
-			elem = iterator.next();
-				if (!listeTri.contains(elem)) {
-					listeTri.add(elem);
-				}
-				else {
-					index=listeTri.lastIndexOf(elem);
-					listeTri.add(index, elem);
-				}
+		for (E elem : liste) {
+			if (!listeTri.contains(elem)) {
+				listeTri.add(elem);
+			} else {
+				index = listeTri.lastIndexOf(elem);
+				listeTri.add(index, elem);
+			}
 
 		}
 		return listeTri;
 	}
 
 	public static <E> boolean verifierRassemblement(List<E> liste) {
-		boolean result = true;
-		int index;
-		E elem1 = liste.get(0);
-		E elem2 = liste.get(1);
-		E elem3 = null;
-
+		E elementCourrant = liste.get(0);
+		E elementSuivant = liste.get(1);
+        if(liste.isEmpty())return false;
+        
 		for (ListIterator<E> iterator = liste.listIterator(1); iterator.hasNext();) {
-			if (elem2.equals(elem1)) {
-				elem2 = iterator.next();
+			if (elementSuivant.equals(elementCourrant)) {
+				elementSuivant = iterator.next();
 			} else {
-				index = liste.indexOf(elem2);
-				for (ListIterator<E> iterator2 = liste.listIterator(index); iterator2.hasNext();) {
-					elem3 = iterator2.next();
-					result = result && (!elem3.equals(elem1));
-				}
-				elem1 = elem2;
+				if(trouverElementFinDeListe(liste,elementCourrant, elementSuivant))return false;
+				elementCourrant = elementSuivant;
 			}
-
 		}
+		return true;
+	}
 
-		return result;
+	private static <E> boolean trouverElementFinDeListe(List<E> liste, E elementCourrant, E elementSuivant) {
+		int index;
+		index = liste.indexOf(elementSuivant);
+		for (ListIterator<E> iterator2 = liste.listIterator(index); iterator2.hasNext();) {
+			E elementRecherche = iterator2.next();
+			if(elementRecherche.equals(elementCourrant))
+				return false;
+		}
+		return true;
 	}
 }
