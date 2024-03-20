@@ -3,7 +3,7 @@ package cartes;
 public class Borne extends Carte {
 	private int nbKilometres;
 
-	public Borne( int nbkilometres,int nbExenplaires) {
+	public Borne(int nbkilometres, int nbExenplaires) {
 		super(nbExenplaires);
 		this.nbKilometres = nbkilometres;
 	}

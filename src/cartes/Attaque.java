@@ -2,17 +2,18 @@ package cartes;
 
 public class Attaque extends Bataille {
 
-	public Attaque( Type typeCarte,int nbExenplaires) {
+	public Attaque(Type typeCarte, int nbExenplaires) {
 		super(nbExenplaires, typeCarte);
 
 	}
+
 	@Override
 	public String toString() {
-		Type typeCarte=super.getType();
-		switch(typeCarte){
+		Type typeCarte = super.getType();
+		switch (typeCarte) {
 		case FEU:
 			return "Feu Rouge";
-		case ESSENCE :
+		case ESSENCE:
 			return "Panne d'essence";
 		case CREVAISON:
 			return "Crevaison";
@@ -21,6 +22,5 @@ public class Attaque extends Bataille {
 		}
 		return "";
 	}
-
 
 }

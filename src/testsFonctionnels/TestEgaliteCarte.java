@@ -51,7 +51,7 @@ public class TestEgaliteCarte {
 
 		System.out.println(parade1.equals(parade2));
 		System.out.println(parade1.equals(parade3));
-		
+
 		System.out.println(attaque1.equals(attaque2));
 		System.out.println(attaque1.equals(attaque3));
 

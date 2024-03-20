@@ -2,7 +2,7 @@ package cartes;
 
 public class Botte extends Probleme {
 
-	public Botte( Type typeCarte,int nbExenplaires) {
+	public Botte(Type typeCarte, int nbExenplaires) {
 		super(nbExenplaires, typeCarte);
 	}
 
@@ -21,6 +21,5 @@ public class Botte extends Probleme {
 		}
 		return "";
 	}
-
 
 }
