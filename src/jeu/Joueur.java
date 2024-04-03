@@ -1,14 +1,22 @@
 package jeu;
 
+import java.util.HashSet;
 import java.util.List;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import cartes.Borne;
+import cartes.Botte;
 import cartes.Carte;
+import cartes.FinLimite;
 import cartes.Limite;
+import cartes.Type;
 
 public class Joueur {
 	private String nom;
 	private ZoneDeJeu zoneDeJeu = new ZoneDeJeu();
+
 	private MainAsListe main = new MainAsListe();
 
 	public Joueur(String nom) {
@@ -56,18 +64,49 @@ public class Joueur {
 		}
 		return result;
 	}
-	public void  deposer(Borne borne) {
+
+	public ZoneDeJeu getZoneDeJeu() {
+		return zoneDeJeu;
+	}
+
+	public void setZoneDeJeu(ZoneDeJeu zoneDeJeu) {
+		this.zoneDeJeu = zoneDeJeu;
+	}
+
+	public void deposer(Borne borne) {
 		zoneDeJeu.addBorne(borne);
 	}
-	
+
 	public int donnerKmParcourus() {
-		int kmParcourus =0;
-		List<Borne>bornes=zoneDeJeu.getPileBorne();
-		for (Borne borne : bornes) {
-			kmParcourus+= borne.getNbKilometres();
-		}
+		int kmParcourus = 0;
 		return kmParcourus;
 	}
 
+	public int donnerLimitationVitesse() {
+		int result = 200;
+		List<Limite> pileLimite = zoneDeJeu.getPileLimit();
+		Set<Botte> bottes = new TreeSet<>();
+		if (!pileLimite.isEmpty()) {
+			Limite limite = pileLimite.get(0);
+			if (!(limite instanceof FinLimite || ((!bottes.isEmpty()) && ((TreeSet<Botte>) bottes).last().getType() == Type.FEU))) {
+				result = 50;
+			}
+		}
+		return result;
+
+	}
+
+	public boolean estDepotAutorise(Carte carte) {
+	
+		return zoneDeJeu.estDepotAutorise(carte);
+	}
+	
+	public Set<Coup> coupsPossibles(Set<Joueur> participants) {
+		Set<Coup> coups= new HashSet<>();
+		for(Joueur joueur : participants) {
+			
+		}
+		return coups;
+	}
 
 }

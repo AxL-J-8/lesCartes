@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import cartes.Bataille;
 import cartes.Borne;
 import cartes.Botte;
+import cartes.Carte;
 import cartes.Limite;
 
 public class ZoneDeJeu {
@@ -27,24 +28,12 @@ public class ZoneDeJeu {
 		this.pileLimit = pileLimit;
 	}
 
-	public List<Bataille> getPileBataille() {
-		return pileBataille;
-	}
-
 	public void setPileBataille(List<Bataille> pileBataille) {
 		this.pileBataille = pileBataille;
 	}
 
-	public NavigableSet<Botte> getBottes() {
-		return bottes;
-	}
-
 	public void setBottes(NavigableSet<Botte> bottes) {
 		this.bottes = bottes;
-	}
-
-	public List<Borne> getPileBorne() {
-		return pileBorne;
 	}
 
 	public void setPileBorne(List<Borne> pileBorne) {
@@ -67,4 +56,21 @@ public class ZoneDeJeu {
 		bottes.add(botte);
 	}
 
+	public Botte getBotte(Botte botte) {
+		return bottes.last();
+	}
+
+	public boolean estDepotAutorise(Carte carte) {
+		if (carte instanceof Botte) {
+			return true;
+		} else if (carte instanceof Borne) {
+			return true;
+		} else if (carte instanceof Limite) {
+			return true;
+			
+		}else {
+			return false;
+		}
+
+	}
 }
