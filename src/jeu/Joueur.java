@@ -1,19 +1,15 @@
 package jeu;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.NavigableSet;
-import java.util.TreeSet;
 
-import cartes.Bataille;
-import cartes.Botte;
+import cartes.Borne;
+import cartes.Carte;
 import cartes.Limite;
 
 public class Joueur {
 	private String nom;
-	private List<Limite> pileLimit = new LinkedList<>();
-	private List<Bataille> pileBataille = new LinkedList<>();
-	private NavigableSet<Botte> bottes = new TreeSet<>();
+	private ZoneDeJeu zoneDeJeu = new ZoneDeJeu();
+	private MainAsListe main = new MainAsListe();
 
 	public Joueur(String nom) {
 		this.nom = nom;
@@ -27,31 +23,6 @@ public class Joueur {
 		this.nom = nom;
 	}
 
-	public List<Limite> getPileLimit() {
-		return pileLimit;
-	}
-
-	public void setPileLimit(List<Limite> pileLimit) {
-		this.pileLimit = pileLimit;
-	}
-
-	public List<Bataille> getPileBataille() {
-		return pileBataille;
-	}
-
-	public void setPileBataille(List<Bataille> pileBataille) {
-		this.pileBataille = pileBataille;
-	}
-	
-
-	public NavigableSet<Botte> getBottes() {
-		return bottes;
-	}
-
-	public void setBottes(NavigableSet<Botte> bottes) {
-		this.bottes = bottes;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Joueur joueur) {
@@ -59,9 +30,44 @@ public class Joueur {
 		}
 		return false;
 	}
-	 
+
+	@Override
+	public int hashCode() {
+		return 31 * nom.hashCode();
+	}
+
 	@Override
 	public String toString() {
 		return nom;
 	}
+
+	public MainAsListe getMain() {
+		return main;
+	}
+
+	public void donner(Carte carte) {
+		main.prendre(carte);
+	}
+
+	public Carte prendreCarte(List<Carte> sabot) {
+		Carte result = null;
+		if (!sabot.isEmpty()) {
+			result = sabot.remove(0);
+		}
+		return result;
+	}
+	public void  deposer(Borne borne) {
+		zoneDeJeu.addBorne(borne);
+	}
+	
+	public int donnerKmParcourus() {
+		int kmParcourus =0;
+		List<Borne>bornes=zoneDeJeu.getPileBorne();
+		for (Borne borne : bornes) {
+			kmParcourus+= borne.getNbKilometres();
+		}
+		return kmParcourus;
+	}
+
+
 }
