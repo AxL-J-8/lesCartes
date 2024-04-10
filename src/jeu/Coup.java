@@ -9,6 +9,8 @@ public class Coup {
 	private Joueur cible;
 
 	public Coup(Carte carte, Joueur joueur) {
+		/*if (joueur==null) {
+		}*/
 		this.carte = carte;
 		this.cible = joueur;
 	}
@@ -30,7 +32,7 @@ public class Coup {
 	}
 
 	public boolean estValide(Joueur joueur) {
-		if (cible.estDepotAutorise(carte)) {
+		if (cible!=null &&cible.estDepotAutorise(carte)) {
 			if (joueur.equals(cible)) {
 				return !((carte instanceof Limite) || (carte instanceof Attaque));
 			} else {

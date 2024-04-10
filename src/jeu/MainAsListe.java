@@ -1,18 +1,20 @@
 package jeu;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 
 import cartes.Carte;
 
-public class MainAsListe implements Main {
+public class MainAsListe implements IMain {
 
-	private List<Carte> listeMain = new ArrayList<>();
+	private List<Carte> listeMain=new LinkedList<>() ;
 
 	public MainAsListe() {
+
 	}
+	
 
 	@Override
 	public void prendre(Carte carte) {

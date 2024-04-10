@@ -11,10 +11,10 @@ public static void main(String[] args) {
 	Borne borne100=new Borne(100, 1);
 	
 	joueur.deposer(borne25);
-	System.out.println(joueur.donnerKmParcourus()==25?"25":"pas 25");
+	System.out.println("Km parcouru : "+joueur.donnerKmParcourus()+" (Resultat attendu 25)");
 	joueur.deposer(borne50);
-	System.out.println(joueur.donnerKmParcourus()==75?"75":"pas 75");
+	System.out.println("Km parcouru : "+joueur.donnerKmParcourus()+" (Resultat attendu 75)");
 	joueur.deposer(borne100);
-	System.out.println(joueur.donnerKmParcourus()==175?"175":"pas 175");
+	System.out.println("Km parcouru : "+joueur.donnerKmParcourus()+" (Resultat attendu 175)");
 }
 }

@@ -1,11 +1,14 @@
 package jeu;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import java.util.Set;
 import java.util.TreeSet;
 
+import cartes.Bataille;
 import cartes.Borne;
 import cartes.Botte;
 import cartes.Carte;
@@ -16,7 +19,6 @@ import cartes.Type;
 public class Joueur {
 	private String nom;
 	private ZoneDeJeu zoneDeJeu = new ZoneDeJeu();
-
 	private MainAsListe main = new MainAsListe();
 
 	public Joueur(String nom) {
@@ -58,11 +60,12 @@ public class Joueur {
 	}
 
 	public Carte prendreCarte(List<Carte> sabot) {
-		Carte result = null;
+		Carte carte = null;
 		if (!sabot.isEmpty()) {
-			result = sabot.remove(0);
+			carte = sabot.remove(0);
+			main.prendre(carte);
 		}
-		return result;
+		return carte;
 	}
 
 	public ZoneDeJeu getZoneDeJeu() {
@@ -73,40 +76,65 @@ public class Joueur {
 		this.zoneDeJeu = zoneDeJeu;
 	}
 
-	public void deposer(Borne borne) {
-		zoneDeJeu.addBorne(borne);
+	public boolean deposer(Borne borne) {
+
+		return zoneDeJeu.deposer(borne);
+
+	}
+
+	public boolean deposer(Limite limite) {
+
+		return zoneDeJeu.deposer(limite);
+
+	}
+
+	public boolean deposer(Bataille bataille) {
+
+		return zoneDeJeu.deposer(bataille);
+
+	}
+
+	public boolean deposer(Botte botte) {
+
+		return zoneDeJeu.deposer(botte);
+
 	}
 
 	public int donnerKmParcourus() {
-		int kmParcourus = 0;
-		return kmParcourus;
+		return zoneDeJeu.kmParcourus();
 	}
 
 	public int donnerLimitationVitesse() {
-		int result = 200;
-		List<Limite> pileLimite = zoneDeJeu.getPileLimit();
-		Set<Botte> bottes = new TreeSet<>();
-		if (!pileLimite.isEmpty()) {
-			Limite limite = pileLimite.get(0);
-			if (!(limite instanceof FinLimite || ((!bottes.isEmpty()) && ((TreeSet<Botte>) bottes).last().getType() == Type.FEU))) {
-				result = 50;
-			}
-		}
-		return result;
+
+		return zoneDeJeu.donnerLimitationVitesse();
 
 	}
 
 	public boolean estDepotAutorise(Carte carte) {
-	
 		return zoneDeJeu.estDepotAutorise(carte);
 	}
-	
+
 	public Set<Coup> coupsPossibles(Set<Joueur> participants) {
-		Set<Coup> coups= new HashSet<>();
-		for(Joueur joueur : participants) {
-			
+		Set<Coup> coups = new HashSet<>();
+
+		for (Joueur joueur : participants) {
+			for (Iterator<Carte> iterMain = main.iterator(); iterMain.hasNext();) {
+				Carte carte = iterMain.next();
+				Coup coup = new Coup(carte, joueur);
+				if (coup.estValide(joueur)) {
+					coups.add(coup);
+				}
+
+			}
 		}
 		return coups;
+	}
+
+	public void coupsDefausse() {
+		for (Iterator<Carte> iterMain = main.iterator(); iterMain.hasNext();) {
+			Carte carte = iterMain.next();
+			Coup coup = new Coup(carte, null);
+		}
 	}
 
 }
